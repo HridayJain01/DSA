@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void printArray(int A[], int n)
+ {
+    for(int i=0;i<n;i++)
+    {
+        printf("\n %d",A[i]);
+    }
+ }
+int merge(int A[], int low, int m, int high) {
+    int i, j, k;
+
+    int len1 = m - low + 1;
+    int len2 = high - m;
+
+    int temp1[len1], temp2[len2];
+
+    for (i = 0; i < len1; i++) {
+        temp1[i] = A[low + i];
+    }
+    for (j = 0; j < len2; j++) {
+        temp2[j] = A[m + 1 + j];
+    }
+
+    i = 0;
+    j = 0;
+    k = low;
+
+    while (i < len1 && j < len2) {
+        if (temp1[i] <= temp2[j]) {
+            A[k] = temp1[i];
+            i++;
+        } else {
+            A[k] = temp2[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < len1) {
+        A[k] = temp1[i];
+        i++;
+        k++;
+    }
+    while (j < len2) {
+        A[k] = temp2[j];
+        j++;
+        k++;
+    }
+    return 0;
+}
+
+int mergeSort(int A[],int low,int high)
+{
+    if (low<high)
+    {
+        int m = (low + (high-1))/2;
+        mergeSort(A,low,m);
+        mergeSort(A,m+1,high);
+        // merge
+        merge(A,low,m,high);
+    }
+    return 0;
+}
+
+ 
+ int main()
+{
+    int A[] = {3,5,6,7,8,23,54,4,2,45};
+    int l= sizeof(A)/sizeof(A[0]);
+    printf("%d",l);
+    printArray(A,l);
+    mergeSort(A,0,l-1);
+    printArray(A,l);
+    
+
+}
